@@ -1,22 +1,10 @@
-import { firebase, googleAuthProvider } from '../firebase/firebase';
+import { history } from '../routers/AppRouter';
 
-export const login = (uid) => ({
+export const login = (accessToken) => ({
   type: 'LOGIN',
-  uid
+  accessToken
 });
-
-export const startLogin = () => {
-  return () => {
-    return firebase.auth().signInWithPopup(googleAuthProvider);
-  };
-};
 
 export const logout = () => ({
   type: 'LOGOUT'
 });
-
-export const startLogout = () => {
-  return () => {
-    return firebase.auth().signOut();
-  };
-};

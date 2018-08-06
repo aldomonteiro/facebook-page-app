@@ -7,7 +7,6 @@ import { login, logout } from './actions/auth';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
-import { firebase } from './firebase/firebase';
 import LoadingPage from './components/LoadingPage';
 
 const store = configureStore();
@@ -26,9 +25,9 @@ const renderApp = () => {
 
 ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
-firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-    store.dispatch(login(user.uid));
+const handleStatusChange = ({status, authResponse}) => {
+  if (status === 'connected') {
+    store.dispatch(login(authResponse.accessToken));
     renderApp();
     if (history.location.pathname === '/') {
       history.push('/dashboard');
@@ -36,6 +35,29 @@ firebase.auth().onAuthStateChanged((user) => {
   } else {
     store.dispatch(logout());
     renderApp();
-    history.push('/');
+    if(history.location.pathname !== '/') {
+      history.push('/');
+    }
   }
-});
+};
+
+window.fbAsyncInit = function() {
+  FB.init({
+    appId            : '920629074811238',
+    autoLogAppEvents : true,
+    xfbml            : true,
+    version          : 'v3.1',
+    status           : true
+  });
+
+  FB.getLoginStatus(handleStatusChange);
+  FB.Event.subscribe('auth.statusChange', handleStatusChange);  
+};
+
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1&appId=920629074811238&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
