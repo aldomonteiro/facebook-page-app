@@ -1,11 +1,11 @@
 import { login, logout } from '../../actions/auth';
 
 test('should generate login action object', () => {
-  const accessToken = 'abc123';
-  const action = login(accessToken);
+  const user = {id: 'abc123'};
+  const action = login(user);
   expect(action).toEqual({
     type: 'LOGIN',
-    accessToken
+    user
   });
 });
 

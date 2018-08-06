@@ -1,8 +1,9 @@
 import React from 'react';
+import PageList from './PageList';
 
 const DashboardPage = () => (
   <div>
-    Dashboard page content
+    <PageList />
   </div>
 );
 

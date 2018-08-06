@@ -10,16 +10,19 @@ exports[`should correctly render LoginPage 1`] = `
     <h1
       className="box-layout__title"
     >
-      Boilerplate
+      Facebook Page Manager
     </h1>
     <p>
-      Tag line for app.
+      Create and view posts on your Facebook Pages.
     </p>
-    <button
-      className="button"
-    >
-      Login with Google
-    </button>
+    <div
+      className="fb-login-button"
+      data-button-type="login_with"
+      data-max-rows="1"
+      data-size="large"
+      data-use-continue-as="true"
+      scope="manage_pages, publish_pages, read_insights"
+    />
   </div>
 </div>
 `;

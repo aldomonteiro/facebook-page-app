@@ -16,7 +16,7 @@ exports[`should render Header correctly 1`] = `
         to="/dashboard"
       >
         <h1>
-          Facebook Page Admin
+          Facebook Page Manager
         </h1>
       </Link>
       <button

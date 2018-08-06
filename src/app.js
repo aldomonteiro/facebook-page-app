@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
-import { login, logout } from './actions/auth';
+import { loadCurrentUser, logout } from './actions/auth';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
@@ -27,11 +27,12 @@ ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 const handleStatusChange = ({status, authResponse}) => {
   if (status === 'connected') {
-    store.dispatch(login(authResponse.accessToken));
-    renderApp();
-    if (history.location.pathname === '/') {
-      history.push('/dashboard');
-    }
+    store.dispatch(loadCurrentUser(authResponse)).finally(() => {
+      renderApp();
+      if (history.location.pathname === '/') {
+        history.push('/dashboard');
+      }
+    });
   } else {
     store.dispatch(logout());
     renderApp();
@@ -58,6 +59,6 @@ window.fbAsyncInit = function() {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1&appId=920629074811238&autoLogAppEvents=1';
+  js.src = 'https://connect.facebook.net/en_US/sdk.js';
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
