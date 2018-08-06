@@ -14,7 +14,7 @@ export class Header extends React.Component {
               <h1>Facebook Page Manager</h1>
             </Link>
             <span className="header__user">
-              <p>Logged in as {this.props.user.name}</p>
+              {this.props.user && <p>Logged in as {this.props.user.name}</p>}
               <button className="button button--link" onClick={this.props.logout}>Logout</button>
             </span>
           </div>

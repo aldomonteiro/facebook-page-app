@@ -19,12 +19,16 @@ exports[`should render Header correctly 1`] = `
           Facebook Page Manager
         </h1>
       </Link>
-      <button
-        className="button button--link"
-        onClick={[Function]}
+      <span
+        className="header__user"
       >
-        Logout
-      </button>
+        <button
+          className="button button--link"
+          onClick={[Function]}
+        >
+          Logout
+        </button>
+      </span>
     </div>
   </div>
 </header>
