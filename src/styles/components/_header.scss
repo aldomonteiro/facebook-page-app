@@ -16,3 +16,15 @@
     margin: 0;
   }
 }
+
+.header__user {
+  display: flex;
+  align-items: flex-end;
+  color: white;
+  text-decoration: none;
+
+  button {
+    margin-left: $s-size; 
+    border-left: 1px solid $off-white;
+  }
+}

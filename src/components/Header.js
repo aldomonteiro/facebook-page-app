@@ -13,7 +13,10 @@ export class Header extends React.Component {
             <Link className="header__title" to="/dashboard">
               <h1>Facebook Page Manager</h1>
             </Link>
-            <button className="button button--link" onClick={this.props.logout}>Logout</button>
+            <span className="header__user">
+              <p>Logged in as {this.props.user.name}</p>
+              <button className="button button--link" onClick={this.props.logout}>Logout</button>
+            </span>
           </div>
         </div>
       </header>
@@ -25,4 +28,8 @@ const mapDispatchToProps = (dispatch) => ({
   logout: () => dispatch(logoutCurrentUser())
 });
 
-export default connect(undefined, mapDispatchToProps)(Header);
+const mapStateToProps = (state) => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -28,7 +28,7 @@ export class PageList extends React.Component {
       this.state.loading ? <LoadingPage /> :
         <div className="content-container">
           <div className="list-header">
-            <div>Pages</div>
+            <div>{this.props.pages.length.toString()} {this.props.pages.length == 1 ? 'Page' : 'Pages'}</div>
           </div>
           <div className="list-body">
             {
