@@ -4,10 +4,11 @@ import { Provider } from 'react-redux';
 import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { loadCurrentUser, logout } from './actions/auth';
+import LoadingPage from './components/LoadingPage';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
-import LoadingPage from './components/LoadingPage';
+import 'react-table/react-table.css'
 
 const store = configureStore();
 const jsx = (
@@ -27,7 +28,7 @@ ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 const handleStatusChange = ({status, authResponse}) => {
   if (status === 'connected') {
-    store.dispatch(loadCurrentUser(authResponse)).finally(() => {
+    store.dispatch(loadCurrentUser()).finally(() => {
       renderApp();
       if (history.location.pathname === '/') {
         history.push('/dashboard');
