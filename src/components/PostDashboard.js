@@ -23,7 +23,7 @@ export class PostDashboard extends React.Component {
             {this.props.page.pictureUrl && <Image src={this.props.page.pictureUrl} circle/>}
             <h3 className="list-item__title">{this.props.page.name}</h3>
           </div>
-          <Tabs defaultActiveKey={2} id="uncontrolled-tab-example">
+          <Tabs defaultActiveKey={2} id="post-type-tabs" unmountOnExit={true}>
             <Tab eventKey={1} title="Published Posts">
               <PostList {...this.props} postType="Published"/>
             </Tab>
