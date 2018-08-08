@@ -26,7 +26,7 @@ const renderApp = () => {
 
 ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
-const handleStatusChange = ({status, authResponse}) => {
+const handleStatusChange = ({status}) => {
   if (status === 'connected') {
     store.dispatch(loadCurrentUser()).finally(() => {
       renderApp();

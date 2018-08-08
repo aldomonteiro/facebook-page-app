@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Image, Tabs, Tab } from 'react-bootstrap';
-import { PostList } from './PostList';
+import { Image } from 'react-bootstrap';
+import PostList from './PostList';
 import { selectPage } from '../selectors/pages';
 import { history } from '../routers/AppRouter';
 
@@ -21,16 +21,9 @@ export class PostDashboard extends React.Component {
         <div className="content-container">
           <div className="list-header">
             {this.props.page.pictureUrl && <Image src={this.props.page.pictureUrl} circle/>}
-            <h3 className="list-item__title">{this.props.page.name}</h3>
+            <h3 className="list-item__title">{this.props.page.name} Posts</h3>
           </div>
-          <Tabs defaultActiveKey={2} id="post-type-tabs" unmountOnExit={true}>
-            <Tab eventKey={1} title="Published Posts">
-              <PostList {...this.props} postType="Published"/>
-            </Tab>
-            <Tab eventKey={2} title="Scheduled Posts">
-              <PostList {...this.props} postType="Scheduled"/>
-            </Tab>
-          </Tabs>
+          <PostList {...this.props}/>
         </div>
       );
     }
