@@ -42,3 +42,24 @@ export const loadPosts = (page) => {
     });
   }
 }
+
+export const createPost = (page, post) => {
+  return (dispatch, getState) => {
+    let params = {
+      access_token: page.access_token
+    };
+
+    //TODO
+    // return new Promise((resolve, reject) => {
+    //   FB.api(postEndpoint, params, (response) => {
+    //     if(!response || response.error) {
+    //       reject(response.error);
+    //       return;
+    //     }
+
+    //     dispatch(addPosts(response.data, response.paging ? response.paging.next : ''));
+    //     resolve();
+    //   });
+    // });
+  }
+}

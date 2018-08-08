@@ -31,7 +31,7 @@ const handleStatusChange = ({status}) => {
     store.dispatch(loadCurrentUser()).finally(() => {
       renderApp();
       if (history.location.pathname === '/') {
-        history.push('/dashboard');
+        history.push('/pages');
       }
     });
   } else {

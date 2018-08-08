@@ -7,7 +7,6 @@ import { loadPosts, clearPosts } from '../actions/posts';
 
 export class PostList extends React.Component {
   state = {
-    loading: true,
     loadingMore: false
   };
 
@@ -56,33 +55,24 @@ export class PostList extends React.Component {
       });
   }
 
-  componentDidMount() {
-    this.props.clearPosts();
-    this.props.loadPosts(this.props.page)
-      .finally(() => {
-        this.setState(() => ({ loading: false }));
-      });
-  }
-
   render() {
     return (
-      this.state.loading ? <LoadingPage /> :
-        <div>
-          {(this.props.posts.length === 0) && 'No posts found for this page'}
-          <ReactTable
-            data={this.props.posts}
-            noDataText={''}
-            columns={this.columns}
-            showPagination={false}
-            showPageSizeOptions={false}
-            minRows={0}
-            className="-striped -highlight"
-          />
-          <span className="pagination-container">
-            {this.props.next && <button className="button" onClick={this.loadMorePosts}>Load more posts...</button>}
-            {this.state.loadingMore && <LoadingPage />}
-          </span>
-        </div>
+      <div>
+        {(this.props.posts.length === 0) && 'No posts found for this page'}
+        <ReactTable
+          data={this.props.posts}
+          noDataText={''}
+          columns={this.columns}
+          showPagination={false}
+          showPageSizeOptions={false}
+          minRows={0}
+          className="-striped -highlight"
+        />
+        <span className="pagination-container">
+          {this.props.next && <button className="button" onClick={this.loadMorePosts}>Load more posts...</button>}
+          {this.state.loadingMore && <LoadingPage />}
+        </span>
+      </div>
     );
   }
 };

@@ -10,7 +10,7 @@ export class Header extends React.Component {
       <header className="header">
         <div className="content-container">
           <div className="header__content">
-            <Link className="header__title" to="/dashboard">
+            <Link className="header__title" to="/pages">
               <h1>Facebook Page Manager</h1>
             </Link>
             <span className="header__user">
