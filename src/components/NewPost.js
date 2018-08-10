@@ -45,7 +45,7 @@ export default class NewPostModal extends React.Component {
 
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.props.handleClose}>
+      <Modal show={this.props.show} onHide={this.onClose}>
         <Modal.Header closeButton>
           <Modal.Title>Create a New Post</Modal.Title>
         </Modal.Header>
