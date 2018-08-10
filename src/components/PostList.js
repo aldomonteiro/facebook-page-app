@@ -34,6 +34,10 @@ export class PostList extends React.Component {
       Cell: row => (
         <div>{row.value ? 'Yes' : 'No'}</div>
       )
+    }, {
+      Header: 'Impressions',
+      accessor: 'post_impressions',
+      maxWidth: 100
     }
   ];
 

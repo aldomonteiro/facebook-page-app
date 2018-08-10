@@ -7,7 +7,6 @@ import { loadCurrentUser, logout } from './actions/auth';
 import LoadingPage from './components/LoadingPage';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
-import 'react-dates/lib/css/_datepicker.css';
 import 'react-table/react-table.css'
 
 const store = configureStore();
@@ -26,17 +25,15 @@ const renderApp = () => {
 
 ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
-const handleStatusChange = ({status}) => {
+const handleAuthChange = ({status}) => {
   if (status === 'connected') {
     store.dispatch(loadCurrentUser()).finally(() => {
-      renderApp();
       if (history.location.pathname === '/') {
         history.push('/pages');
       }
     });
   } else {
     store.dispatch(logout());
-    renderApp();
     if(history.location.pathname !== '/') {
       history.push('/');
     }
@@ -48,12 +45,11 @@ window.fbAsyncInit = function() {
     appId            : '920629074811238',
     autoLogAppEvents : true,
     xfbml            : true,
-    version          : 'v3.1',
-    status           : true
+    version          : 'v3.1'
   });
 
-  FB.getLoginStatus(handleStatusChange);
-  FB.Event.subscribe('auth.statusChange', handleStatusChange);  
+  FB.Event.subscribe('auth.authResponseChange', handleAuthChange);  
+  renderApp();
 };
 
 (function(d, s, id) {

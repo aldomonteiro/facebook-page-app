@@ -27,19 +27,10 @@ export const loadCurrentUser = () => {
 export const logoutCurrentUser = () => {
   return (dispatch) => {
     return new Promise((resolve) => {
-      FB.getLoginStatus((resp) => {
-        if(resp.status === 'connected') {
-          FB.logout(() => {
-            dispatch(logout());
-            resolve();
-          });
-        }
-        else {
-          // Already logged out
-          dispatch(logout());
-          resolve();
-        }
-      }, true);
+      FB.logout(() => {
+        dispatch(logout());
+        resolve();
+      });
     });
   };
 };

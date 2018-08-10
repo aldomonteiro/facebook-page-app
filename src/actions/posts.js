@@ -9,6 +9,23 @@ export const clearPosts = () => ({
   type: 'CLEAR_POSTS',
 });
 
+const loadPostInsight = (post, token, insight) => {
+  return new Promise((resolve, reject) => {
+    let params = {
+      access_token: token
+    };
+    FB.api(`/${post.id}/insights/${insight}`, params, (response) => {
+      if(!response || response.error) {
+        reject(response.error);
+        return;
+      }
+
+      post[insight] = response.data[0].values[0].value;
+      resolve();
+    });
+  });
+}
+
 export const loadPosts = (page) => {
   return (dispatch, getState) => {
     let postEndpoint = '';
@@ -36,30 +53,37 @@ export const loadPosts = (page) => {
           return;
         }
 
-        dispatch(addPosts(response.data, response.paging ? response.paging.next : ''));
-        resolve();
+        let promises = [];
+        response.data.forEach((post) => {
+          promises.push(loadPostInsight(post, page.access_token, 'post_impressions'));
+        });
+
+        Promise.all(promises)
+          .finally(() => {
+            dispatch(addPosts(response.data, response.paging ? response.paging.next : ''));
+            resolve();
+          });
       });
     });
   }
 }
 
 export const createPost = (page, post) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     let params = {
-      access_token: page.access_token
+      access_token: page.access_token,
+      message: post.message,
+      published: post.published
     };
 
-    //TODO
-    // return new Promise((resolve, reject) => {
-    //   FB.api(postEndpoint, params, (response) => {
-    //     if(!response || response.error) {
-    //       reject(response.error);
-    //       return;
-    //     }
-
-    //     dispatch(addPosts(response.data, response.paging ? response.paging.next : ''));
-    //     resolve();
-    //   });
-    // });
+    return new Promise((resolve, reject) => {
+      FB.api(`/${page.id}/feed`, 'post', params, (response) => {
+        if(!response || response.error) {
+          reject(response.error);
+          return;
+        }
+        resolve();
+      });
+    });
   }
 }

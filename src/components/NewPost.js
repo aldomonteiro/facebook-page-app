@@ -1,15 +1,23 @@
 import React from 'react';
-import { Modal, FormGroup, FormControl, Checkbox } from 'react-bootstrap';
-
+import { Modal, FormControl, Checkbox } from 'react-bootstrap';
 export default class NewPostModal extends React.Component {
   state = {
     message: '',
-    published: false
+    published: true
   };
+
+  clearState = () => {
+    this.setState(() => ({ 
+      published: true,
+      message: ''
+    }));
+  }
 
   onMessageChange = (e) => {
     const message = e.target.value;
-    this.setState(() => ({ message }));
+    this.setState(() => ({ 
+      message
+     }));
   };
 
   onPublishedChange = (e) => {
@@ -19,10 +27,20 @@ export default class NewPostModal extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+    this.clearState();
     this.props.onSubmit({
       message: this.state.message,
       published: this.state.published
     });
+  }
+
+  onClose = () => {
+    this.clearState();
+    this.props.handleClose();
+  }
+
+  submitDisabled = () => {
+    return this.state.message.length == 0;
   }
 
   render() {
@@ -33,21 +51,19 @@ export default class NewPostModal extends React.Component {
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={this.onSubmit}>
-            <FormGroup>
-              <FormControl
-                componentClass="textarea"
-                value={this.state.message}
-                placeholder="Enter post message"
-                onChange={this.onMessageChange}
-              />
-              <Checkbox inline
-                checked={this.state.published}
-                onChange={this.onPublishedChange}>
-                Published
-              </Checkbox>
-            </FormGroup>
-            <div>
-              <button className="button">Submit</button>
+            <FormControl
+              componentClass="textarea"
+              value={this.state.message}
+              placeholder="Enter a post message"
+              onChange={this.onMessageChange}
+            />
+            <Checkbox inline
+              checked={this.state.published}
+              onChange={this.onPublishedChange}>
+              Published
+            </Checkbox>
+            <div className="modalFooter">
+              <button className="button" disabled={this.submitDisabled()}>Submit</button>
             </div>
           </form>
         </Modal.Body>

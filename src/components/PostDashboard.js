@@ -42,9 +42,11 @@ export class PostDashboard extends React.Component {
   }
 
   saveNewPostModal = (post) => {
-    this.props.createPost(this.props.page, post);
     this.closeNewPostModal();
-    this.reloadPosts();
+    this.props.createPost(this.props.page, post)
+    .finally(() => {
+      this.reloadPosts();
+    });
   }
 
   render() {
