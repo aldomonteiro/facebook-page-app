@@ -49,6 +49,10 @@ export class PostDashboard extends React.Component {
     });
   }
 
+  canCreateContent = () => {
+    return this.props.page && this.props.page.tasks.includes('CREATE_CONTENT');
+  }
+
   render() {
     if(this.props.page) {
       return (
@@ -56,9 +60,9 @@ export class PostDashboard extends React.Component {
           <div className="list-header">
             {this.props.page.pictureUrl && <Image src={this.props.page.pictureUrl} circle/>}
             <h3 className="list-item__title">{this.props.page.name} Posts</h3>
-            <button className="button" onClick={this.showNewPostModal}>New Post</button>
+            {this.canCreateContent() && <button className="button" onClick={this.showNewPostModal}>New Post</button>}
           </div>
-          {this.state.loading ? <LoadingPage /> : <PostList {...this.props}/>}
+          {this.state.loading ? <LoadingPage /> : <PostList {...this.props} reloadPosts={this.reloadPosts}/>}
           <NewPost 
             show={this.state.showNewPostModal}
             handleClose={this.closeNewPostModal}
