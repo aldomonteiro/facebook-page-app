@@ -55,7 +55,7 @@ export const loadPosts = (page) => {
 
         let promises = [];
         response.data.forEach((post) => {
-          promises.push(loadPostInsight(post, page.access_token, 'post_impressions'));
+          promises.push(loadPostInsight(post, page.access_token, 'post_impressions_unique'));
         });
 
         Promise.all(promises)

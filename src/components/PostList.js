@@ -36,7 +36,7 @@ export class PostList extends React.Component {
       )
     }, {
       Header: 'Impressions',
-      accessor: 'post_impressions',
+      accessor: 'post_impressions_unique',
       maxWidth: 100
     }
   ];
